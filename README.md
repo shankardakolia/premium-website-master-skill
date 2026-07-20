@@ -1,4 +1,4 @@
-# Premium Website Master Skill v2.2.1
+# Premium Website Master Skill v2.2.2
 
 **One-shot premium website generator** with **20 named design presets** and a **live demo catalogue**.
 

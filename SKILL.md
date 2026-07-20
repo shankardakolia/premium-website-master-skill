@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.2.1"
+  version: "2.2.2"
   repository: https://github.com/shankardakolia/premium-website-master-skill
   short-description: "20 presets · show catalogue · one-shot sites"
 ---
 
-# Premium Website Master Skill v2.2.1
+# Premium Website Master Skill v2.2.2
 
 You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
 
@@ -125,11 +125,12 @@ Pick a preset (name or number), add a Brief, then say boom.
 6. Honor the selected preset’s aesthetic (quiet luxury, frontier SaaS, wellness, etc.).
 7. Semantic HTML, accessible contrast, focus states, and `prefers-reduced-motion` support.
 8. **Scroll-triggered reveal animations (required, must be clearly visible):**
-   - Below-the-fold content animates in on scroll via `IntersectionObserver` (not only CSS hover).
+   - Below-the-fold content animates in on scroll via `IntersectionObserver` **plus** a `requestAnimationFrame` scroll fallback (IO alone often fails after first paint on mobile/continuous scroll).
    - Default motion: fade + rise (`opacity: 0` → `1`, `translateY(40px–56px)` → `0`) over ~0.7–1.0s with a smooth ease (e.g. `cubic-bezier(0.16, 1, 0.3, 1)`). Optional variants: left, right, scale.
-   - Apply to section heads, cards/grids, feature blocks, testimonials, forms, and footer bands — not only a single hero line.
+   - Animate **discrete content units only** (cards, articles, section heads, stats, steps, forms) — **never** put `opacity: 0` / reveal classes on tall shells (`.container`, full `section`, whole grids). Tall shells stick invisible because IO thresholds never fire.
    - Stagger sibling items (≈60–120ms steps) so lists/grids cascade.
-   - Trigger when ~10–20% of the element is visible; use a slight negative bottom `rootMargin` so motion reads while scrolling.
+   - Trigger when ~10–20% of the element is visible; `rootMargin` bottom about `-8%` to `-10%`.
+   - Re-check visibility on scroll, resize, hash links, and after filter/search UI that shows/hides cards.
    - **Do not use tiny 10–20px offsets** — motion must be obvious on a normal scroll without looking gimmicky.
    - **`prefers-reduced-motion: reduce`:** show all content immediately (`opacity: 1; transform: none; transition: none`) — never leave elements stuck invisible.
    - Do not rely on a global `* { transition-duration: 0.01ms }` alone for reduced motion without also forcing reveal elements visible.
