@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.4"
+  version: "2.3.5"
   repository: https://github.com/shankardakolia/premium-website-master-skill
   short-description: "20 presets · exact demo match · dual mode"
 ---
 
-# Premium Website Master Skill v2.3.4
+# Premium Website Master Skill v2.3.5
 
 You are a high-end website designer. When the user selects a **preset** (or live demo), gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot** that **matches the chosen demo’s layout, structure, and design system** — rewritten with the client brief.
 
@@ -148,10 +148,16 @@ When a client picks a **live demo** (or preset number/name), the generated site 
      - At `min-width: 900px`, `.nav-cta` must be `display: inline-flex` (visible). Mobile: hamburger opens drawer; CTA may live in the drawer.
      - Mode toggle: `.mode-toggle` ~2.6rem, visible border/background, sun/moon SVGs, `id="modeToggle"`, inside `.header-actions` only.
      - Persist with `localStorage` key `pwm-color-mode-v2`.
-   - **Primary CTA contrast (critical):**
-     - Nav link color rules must **exclude** `.btn` / `.btn-primary` / `.nav-cta` (otherwise labels go grey).
-     - Filled primary buttons: **light mode** white label on dark/accent fills; **dark mode** dark ink (`#0a0a0a`) so inverted/light fills (Bloom-style `background: var(--text)`) stay readable. Neon/lime fills keep dark ink in both modes.
-   - **Cards / body copy in dark mode:** never hardcode light-only greys (`#334155`, `#475569`) on card descriptions/tags. Use `var(--text)` / `var(--text-muted)` or dual-mode rules so catalogue/cards stay readable.
+   - **Primary CTA / pill contrast (critical — verify both modes before shipping):**
+     - Nav link color rules must **exclude** `.btn`, `.btn-primary`, and any pill/CTA (e.g. `.emergency-pill`). Never set `color` on a bare `.nav-cta` **wrapper** — that inherits into child pills and washes labels out.
+     - **Never blanket-force `color: #fff` on all `.btn-primary` in both modes.** Match label to fill:
+       - Dark/navy fills → white label
+       - Light fills (white pill, inverted `background: var(--text)`, mint/gold/neon) → dark ink (`#0a0a0a` / `#0B0F14`)
+       - Neon/lime (FitLife) → always dark ink on bright fill
+     - Outline/emergency pills need explicit colors in **both** modes (e.g. orange text + tinted bg) — do not inherit primary CTA white.
+     - Transparent headers with a white CTA pill (Dream Homes pattern): force dark label on that pill; when header becomes solid/scrolled and CTA goes accent, switch to white label if the accent is dark enough.
+     - Pre-flight: check every header CTA + pill in light **and** dark; fail if any label is unreadable (white-on-white, grey-on-mint, light-on-pale).
+   - **Cards / body copy in dark mode:** map all surface tokens (`--card`, `--bg-card`, `--surface`) under `html[data-mode]`. Never leave `--card: #fff` with light mode text vars. Never hardcode light-only greys (`#334155`, `#475569`) on card descriptions/tags. Use `var(--text)` / `var(--text-muted)` so room/service/review cards stay readable on dark surfaces.
    - **Brand-dark / photo heroes:** default page mode is still light. Photo/cinematic heroes keep light-on-dark type in both modes. Neon used as text must darken in light mode.
    - Never `filter: invert()` the page. Toggle must visibly change body/header/cards.
 5. **Images strategy (first generation):**

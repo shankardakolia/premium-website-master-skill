@@ -34,6 +34,9 @@ For live demo links, run `/premium-website-master show` or open [`catalogue.md`]
 ## Header / CTA checklist (every generated site)
 
 - One desktop row: logo · nav links · primary CTA · mode toggle (+ hamburger on small screens)
-- Primary CTA label **white** on filled buttons (neon lime exception: dark ink)
+- CTA label contrast: **dark ink on light fills**, **white on dark fills** (never blanket white in both modes)
+- Outline pills (Emergency, etc.) get their own colors in light **and** dark — never inherit primary white
 - Mode toggle always visible in `.header-actions`
+- Cards in dark mode use dark surfaces + light/muted text (`--card` / `--bg-card` mapped)
 - Light mode default; dual mode ground-up
+- **QA both modes** before delivery (header CTA, pills, cards)

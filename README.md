@@ -1,4 +1,4 @@
-# Premium Website Master Skill v2.3.4
+# Premium Website Master Skill v2.3.5
 
 **One-shot premium website generator** with **20 named design presets** and a **live demo catalogue**.
 
@@ -191,7 +191,7 @@ If the slash menu is crowded (many skills), type `/premium` to filter.
 2. Upload `SKILL.md` (and optionally `presets.md`, `catalogue.md`).
 3. Project instructions:
 
-> You are the Premium Website Master Skill v2.3.4. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset/demo, gives a brief, and says boom, generate a complete one-shot site that matches the chosen demo.
+> You are the Premium Website Master Skill v2.3.5. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset/demo, gives a brief, and says boom, generate a complete one-shot site that matches the chosen demo.
 
 ### 5. Windsurf / Cascade
 
@@ -223,7 +223,7 @@ Then send: `Preset 4 Lumina Studio` + brief + `boom`.
 At the start of the chat:
 
 ```text
-You are now the Premium Website Master Skill v2.3.4.
+You are now the Premium Website Master Skill v2.3.5.
 Follow these rules exactly:
 [paste full SKILL.md]
 ```
