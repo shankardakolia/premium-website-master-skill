@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.6"
+  version: "2.3.7"
   repository: https://github.com/shankardakolia/premium-website-master-skill
-  short-description: "20 presets · pixel-perfect demo match · dual mode"
+  short-description: "20 presets · pixel-perfect demo · dual-mode QA"
 ---
 
-# Premium Website Master Skill v2.3.6
+# Premium Website Master Skill v2.3.7
 
 You are a high-end website designer. When the user selects a **client-approved demo/preset**, gives a **brief** (see `WEBSITE_BRIEF.sample.md`), and says **boom**, generate a complete, client-ready website in **one shot** that is **pixel-close to that exact demo** — same layout, components, spacing, and design system — with only copy/brand/content rewritten from the brief.
 
@@ -228,11 +228,54 @@ When a client picks a **live demo** (or preset number/name), the output must be 
 
 See also `presets.md` and `catalogue.md`.
 
+## What NOT to do (hard bans — learned from catalogue/portfolio QA)
+
+These mistakes caused multi-session rework. **Never ship a site that does any of the following.**
+
+### Dual mode / tokens
+1. **Do not bolt on dark mode last.** Mode owns surfaces from the first token pass.
+2. **Do not let `data-theme` / palette rules redefine `--bg`, `--text`, `--border`, `--header-bg`.** Accents only.
+3. **Do not hardcode `background: #fff` / `#ffffff` on cards, stats, steps, filters, forms, panels, or switchers.** Use `var(--bg-card)`, `var(--bg-elevated)`, or dual-mode rules.
+4. **Do not leave light-mode greys hardcoded** (`#334155`, `#475569`) on body/card copy without a dark-mode companion.
+5. **Do not map only `--bg` / `--text` and forget aliases** (`--card`, `--bg-card`, `--surface`, `--form-bg`). Components that use `--card` stay white in dark mode if you forget them.
+6. **Do not default brand-dark demos to dark mode only** when the product rule is light default — still ship a real light companion.
+
+### Header / CTAs / pills
+7. **Do not put the mode toggle inside the nav link list** or after a broken multi-child grid that drops it to a second row. Pattern: **logo | nav + one CTA | header-actions (toggle + hamburger)**.
+8. **Do not leave two primary CTAs** (one in nav + one sibling) fighting for layout.
+9. **Do not style the bare `.nav-cta` wrapper’s `color`** — inheritance washes out emergency/outline pills.
+10. **Do not blanket-force `color: #fff` on all `.btn-primary` in both modes.** White-on-mint, white-on-gold, white-on-neon, white-on-white pill = fail.
+11. **Do not use white labels on light fills** (inverted `background: var(--text)`, white header pills, neon lime). Use dark ink.
+12. **Do not leave outline/emergency pills** with only accent vars that become unreadable after mode tokens change — give explicit light + dark colors.
+13. **Do not hide desktop `.nav-cta` with `display: none` forever** without a desktop media query (or a single always-visible sibling CTA).
+
+### Portfolio / multi-surface pages
+14. **Do not fix only one section’s dark mode** (e.g. catalogue cards) and skip hero stats, process steps, contact panels, filters, search, theme switcher.
+15. **Do not put light text on white cards** in dark mode (stats, steps, value-items, CTA panels).
+16. **Do not put pale/white headings on pale CTA panels** in dark mode — contact copy must meet contrast on the panel surface.
+
+### Process / delivery
+17. **Do not invent a new layout** when the client approved a catalogue demo — clone that demo.
+18. **Do not skip dual-mode visual QA** before delivery: header CTA, pills, every card type, forms, filters — light **and** dark.
+19. **Do not rely on `localStorage` old keys** after breaking mode prefs — bump key (e.g. `pwm-color-mode-v2`) when resetting defaults.
+20. **Do not use greedy CSS/JS regex rewrites** that can wipe large file sections; prefer scoped, idempotent patches and verify brace balance.
+
+### Pre-flight checklist (required before “done”)
+- [ ] Light default; toggle flips body/header/cards visibly  
+- [ ] Header: logo · links · one CTA · mode toggle, one row on desktop  
+- [ ] CTA labels readable (dark fill→white, light fill→dark ink)  
+- [ ] Outline pills readable in both modes  
+- [ ] No hardcoded white surfaces without dark companions  
+- [ ] Stats, steps, about cards, catalogue cards, contact panel all readable in dark  
+- [ ] Filters/search readable in dark  
+- [ ] Demo match confirmed if client picked a catalogue site  
+
 ## Workflow
 
 1. **Route first:** if the message is `show` / catalogue / demos → print the live catalogue and stop.
 2. Parse preset (number and/or name **or demo brand**, e.g. “Healthy Bites”). Map to the catalogue row. If missing or invalid, list presets (or run show) and ask once.
-3. Parse brief. If missing, ask for industry, audience, and one-word feel (max 3 questions).
-4. On **boom** (or clear go-ahead): load/open the source demo when possible, then generate the full site as an **exact-demo match** with the brief — no partial drafts.
-5. Save under a clear path when working in a project (e.g. `generated-websites/preset-06-solace-wellness/index.html`).
-6. Report: preset + demo used, confirmation that layout matches the demo, live demo link, and how to open/preview the new site.
+3. Parse brief (prefer structured form from `WEBSITE_BRIEF.sample.md`). If missing, ask for industry, audience, and one-word feel (max 3 questions).
+4. On **boom** (or clear go-ahead): load/open the source demo when possible, then generate the full site as a **pixel-close demo match** with the brief — no partial drafts.
+5. Run the **pre-flight checklist** above (both modes).
+6. Save under a clear path when working in a project (e.g. `generated-websites/preset-06-solace-wellness/index.html`).
+7. Report: preset + demo used, confirmation that layout matches the demo, dual-mode QA done, live demo link, and how to open/preview the new site.
