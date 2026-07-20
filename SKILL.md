@@ -150,7 +150,7 @@ When a client picks a **live demo** (or preset number/name), the generated site 
      - Persist with `localStorage` key `pwm-color-mode-v2`.
    - **Primary CTA contrast (critical):**
      - Nav link color rules must **exclude** `.btn` / `.btn-primary` / `.nav-cta` (otherwise labels go grey).
-     - Filled primary buttons: `color: #fff !important; -webkit-text-fill-color: #fff !important` in both modes (exception: neon/lime fills keep dark ink, e.g. FitLife).
+     - Filled primary buttons: **light mode** white label on dark/accent fills; **dark mode** dark ink (`#0a0a0a`) so inverted/light fills (Bloom-style `background: var(--text)`) stay readable. Neon/lime fills keep dark ink in both modes.
    - **Cards / body copy in dark mode:** never hardcode light-only greys (`#334155`, `#475569`) on card descriptions/tags. Use `var(--text)` / `var(--text-muted)` or dual-mode rules so catalogue/cards stay readable.
    - **Brand-dark / photo heroes:** default page mode is still light. Photo/cinematic heroes keep light-on-dark type in both modes. Neon used as text must darken in light mode.
    - Never `filter: invert()` the page. Toggle must visibly change body/header/cards.
