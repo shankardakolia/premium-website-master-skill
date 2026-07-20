@@ -1,8 +1,8 @@
-# Premium Website Master Skill v2.3.5
+# Premium Website Master Skill v2.3.6
 
 **One-shot premium website generator** with **20 named design presets** and a **live demo catalogue**.
 
-Turn any coding agent into a high-end website designer: pick a preset → give a brief → say **boom** → get a complete, client-ready single-file HTML site.
+Turn any coding agent into a high-end website designer: pick a **client-approved demo/preset** → give a structured **brief** → say **boom** → get a complete site that **matches that demo** (layout/design system) with your content.
 
 | Feature | Included |
 |--------|----------|
@@ -32,7 +32,19 @@ Turn any coding agent into a high-end website designer: pick a preset → give a
 
 Prints all 20 exact preset names with hosted demo links (e.g. `https://noventra-portfolio.vercel.app/Bloom%20Florist/index.html`).
 
-3. In your agent chat, generate a site:
+3. In your agent chat, generate a site from an **approved demo + brief**:
+
+```text
+Preset 11 Karma Impact
+# or: GreenLeaf Café
+# or demo URL from the catalogue
+
+Brief: (paste structured brief — see sample below)
+
+boom
+```
+
+Short form still works:
 
 ```text
 Preset 6 Solace Wellness
@@ -40,14 +52,64 @@ Brief: Premium longevity clinic in Dubai for high-net-worth clients. Calm organi
 boom
 ```
 
-4. The agent generates one complete `index.html` (or a path you specify).
+4. The agent **clones the chosen demo’s layout/design system** and rewrites copy/brand from your brief into one complete `index.html`.
 
 Also accepted:
 
-- `Preset 6`
-- `Solace Wellness`
-- `Preset 6 Solace Wellness`
+- `Preset 6` / `Solace Wellness` / demo brand name (e.g. `Healthy Bites`)
 - `show` / `catalogue` / `demos`
+
+### Sample `WEBSITE_BRIEF.md`
+
+Use this structure so the agent knows what to replace in the demo. Full file in the repo: [`WEBSITE_BRIEF.sample.md`](./WEBSITE_BRIEF.sample.md).
+
+```markdown
+# 1. GreenLeaf Café
+
+## Overview
+GreenLeaf Café is a neighborhood coffee shop focused on fresh coffee, healthy snacks, and a relaxing atmosphere.
+
+## Business Type
+Coffee Shop
+
+## Target Audience
+- Students
+- Remote workers
+- Families
+
+## Main Pages
+- Home
+- Menu
+- About Us
+- Gallery
+- Contact
+
+## Key Features
+- Online menu
+- Table reservation
+- Customer reviews
+- Photo gallery
+- Contact form
+
+## Brand Style
+Modern, warm, and eco-friendly.
+```
+
+**How to run with that brief:**
+
+```text
+Preset 11 Karma Impact
+# Demo: GreenLeaf Café → https://noventra-portfolio.vercel.app/GreenLeaf%20Caf%C3%A9/index.html
+
+Brief:
+# 1. GreenLeaf Café
+## Overview
+... (paste the rest of the sample)
+
+boom
+```
+
+**Delivery expectation:** pixel-close match to the approved catalogue demo (same sections, header, cards, dual mode); only business content and images change for the client.
 
 ---
 
@@ -191,7 +253,7 @@ If the slash menu is crowded (many skills), type `/premium` to filter.
 2. Upload `SKILL.md` (and optionally `presets.md`, `catalogue.md`).
 3. Project instructions:
 
-> You are the Premium Website Master Skill v2.3.5. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset/demo, gives a brief, and says boom, generate a complete one-shot site that matches the chosen demo.
+> You are the Premium Website Master Skill v2.3.6. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset/demo, gives a brief, and says boom, generate a complete one-shot site that matches the chosen demo.
 
 ### 5. Windsurf / Cascade
 
@@ -223,7 +285,7 @@ Then send: `Preset 4 Lumina Studio` + brief + `boom`.
 At the start of the chat:
 
 ```text
-You are now the Premium Website Master Skill v2.3.5.
+You are now the Premium Website Master Skill v2.3.6.
 Follow these rules exactly:
 [paste full SKILL.md]
 ```

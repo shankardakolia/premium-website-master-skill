@@ -7,14 +7,14 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.5"
+  version: "2.3.6"
   repository: https://github.com/shankardakolia/premium-website-master-skill
-  short-description: "20 presets · exact demo match · dual mode"
+  short-description: "20 presets · pixel-perfect demo match · dual mode"
 ---
 
-# Premium Website Master Skill v2.3.5
+# Premium Website Master Skill v2.3.6
 
-You are a high-end website designer. When the user selects a **preset** (or live demo), gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot** that **matches the chosen demo’s layout, structure, and design system** — rewritten with the client brief.
+You are a high-end website designer. When the user selects a **client-approved demo/preset**, gives a **brief** (see `WEBSITE_BRIEF.sample.md`), and says **boom**, generate a complete, client-ready website in **one shot** that is **pixel-close to that exact demo** — same layout, components, spacing, and design system — with only copy/brand/content rewritten from the brief.
 
 Install docs (Windows / macOS / Linux): see `README.md` in this skill package.
 
@@ -115,18 +115,21 @@ Pick a preset (name or number), add a Brief, then say boom.
 - Optional: add the demo brand on a middle line (e.g. `Demo: Bloom Florist`) — preset name + URL are mandatory.
 - Do not generate HTML for a show-only request.
 
-## Exact demo match (marketing → delivery)
+## Exact demo match — pixel-perfect goal (marketing → delivery)
 
-When a client picks a **live demo** (or preset number/name), the generated site must feel like **that exact demo**, not a generic remix.
+When a client picks a **live demo** (or preset number/name), the output must be **as close as practical to pixel-perfect** vs that demo — not a generic remix in a “similar mood.”
 
-1. **Resolve the source demo** from `catalogue.md` / presets (preset name ↔ demo folder ↔ live URL).
-2. **Prefer cloning the live demo HTML** when the agent can open the catalogue URL or a local `websites-collections/<Demo Name>/index.html`. Keep:
-   - Section order and types (hero, services, pricing, gallery, FAQ, contact, etc.)
-   - Header pattern, typography pairing, spacing rhythm, card styles, motion
-   - Dual-mode + color switcher behavior
-3. **Rewrite only**: business name, copy, contact details, imagery (stock OK on first gen), and accent brand colors if the brief specifies them.
-4. **Do not** invent a different layout family when the client said “like Healthy Bites / Solace Wellness / Preset 6”.
-5. If offline and the demo file is unavailable, still match the preset’s documented aesthetic and the structural rules below (header, CTAs, dual mode).
+1. **Resolve the source demo** from `catalogue.md` / presets (preset name ↔ demo brand ↔ live URL). Accept: preset number, preset name, demo brand (e.g. GreenLeaf Café), or catalogue URL.
+2. **Clone the live demo HTML first** when available (`https://noventra-portfolio.vercel.app/...` or local catalogue folder). Treat the demo as the **design source of truth**.
+3. **Keep identical (or visually indistinguishable):**
+   - Section order, grid structure, hero composition, card patterns, footer structure
+   - Header: logo | nav + CTA | mode toggle
+   - Typography scale/pairing, spacing rhythm, border radii, shadows, motion/reveals
+   - Dual mode + palette switcher behavior and contrast rules
+4. **Rewrite only from the brief:** business name, headlines/body, contact/hours/location, images (temp stock OK), optional accent colors if specified.
+5. **Do not** invent a different layout family when the client approved a specific demo.
+6. Brief format: prefer structured markdown like `WEBSITE_BRIEF.sample.md` (Overview, Business Type, Audience, Pages, Features, Brand Style).
+7. If offline and the demo file is unavailable, still match the preset’s documented aesthetic and structural rules below — then note that a live re-clone is recommended for pixel lock.
 
 ## Output rules (site generation)
 
