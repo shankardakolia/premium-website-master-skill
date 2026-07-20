@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.0"
+  version: "2.3.1"
   repository: https://github.com/shankardakolia/premium-website-master-skill
-  short-description: "20 presets · show · dark/light · temp images"
+  short-description: "20 presets · dual mode ground-up · temp images"
 ---
 
-# Premium Website Master Skill v2.3.0
+# Premium Website Master Skill v2.3.1
 
 You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
 
@@ -120,13 +120,19 @@ Pick a preset (name or number), add a Brief, then say boom.
 1. **One complete single-file HTML** site (HTML + CSS + JS inline or in one file) unless the user asks for a multi-file project.
 2. **Fully responsive** — works at 375px through 1440px+.
 3. **Built-in color switcher** so the client can preview alternate brand directions (palette variants).
-4. **Dark / light mode toggle in the navbar (required):**
-   - Place a clear sun/moon (or equivalent) control in the **header/navbar** (visible on mobile and desktop).
-   - Persist choice in `localStorage` (e.g. key `pwm-color-mode`).
-   - Toggle `data-mode="light"` / `data-mode="dark"` on `<html>`.
-   - Dark mode must restyle surfaces, text, borders, cards, forms, and header — **do not** invert the whole page with CSS `filter` (that ruins photos).
-   - Respect readable contrast in both modes; keep primary CTAs legible (e.g. white text on accent buttons).
-   - Optional: default from `prefers-color-scheme` when no saved preference.
+4. **Dark / light mode — built from the ground up (required, same priority as responsiveness):**
+   - **Never bolt on mode after the fact.** Design the token system dual-mode first, then build components against tokens only.
+   - **Architecture (mandatory):**
+     - `data-mode="light" | "dark"` on `<html>` owns **structure**: `--bg`, `--bg-elevated`, `--bg-soft`, `--bg-card`, `--text`, `--text-muted`, `--border`, `--header-bg`, form/surface colors.
+     - Optional `data-theme` / palette switchers may **only** change **accents** (`--accent`, `--accent-2`, softs). They must **not** redefine backgrounds/text (that breaks mode).
+     - Use `html[data-mode="light"] { ... }` and `html[data-mode="dark"] { ... }` with enough specificity that palette rules never win over mode for structural tokens.
+   - **Navbar control:** sun/moon (or clear label) in header actions, both mobile and desktop; persist in `localStorage` (e.g. `pwm-color-mode`).
+   - **Brand-dark presets** (gaming, cinematic, dark SaaS, etc.): default `data-mode="dark"` and still ship a real light companion palette (not “dark-on-dark”).
+   - **Brand-light presets:** default `data-mode="light"` with a real dark companion.
+   - Restyle surfaces, text, borders, cards, forms, header, filters, tags — **never** `filter: invert()` on the page.
+   - No hardcoded `#fff` / `#000` on major surfaces; use CSS variables so mode works everywhere.
+   - CTA contrast in both modes (e.g. white label on accent fills).
+   - Toggle must visibly change the page (if light and dark look the same, the implementation failed).
 5. **Images strategy (first generation):**
    - **On first boom / first generation:** use **temporary stock images** (e.g. Unsplash or similar HTTPS URLs) that match the industry/mood — hero, cards, gallery, team, product tiles. Prefer real photo URLs over pure CSS gradients for media areas.
    - Do **not** ship empty gray boxes or gradient-only product/course/gallery tiles when the section is meant to show photography.
