@@ -3,26 +3,37 @@
 Use these exact names or numbers when selecting a preset.  
 For live demo links, run `/premium-website-master show` or open [`catalogue.md`](./catalogue.md).
 
-1. **Aether Luxury** — Quiet luxury private wealth, high-end brand advisory, executive coaching
-2. **Nexus Frontier** — Agentic AI / frontier SaaS platform, developer tools, autonomous agents
-3. **Vanguard Bold** — Confident modern tech, infrastructure, cybersecurity, ambitious startups
-4. **Lumina Studio** — Creative agency, design studio, production house, editorial creative work
-5. **Opulento** — Premium luxury e-commerce, curated fashion, home, beauty, fine goods
-6. **Solace Wellness** — Premium wellness, longevity, spa, biohacking, executive recovery
-7. **Forge Agency** — Creative production, film, photography, experiential, craftsmanship
-8. **Pinnacle Wealth** — Private wealth management, family office, premium fintech
-9. **Horizon Real Estate** — Luxury real estate, high-end property development, vacation homes
-10. **Elysium Hospitality** — Boutique hotels, fine dining, private members clubs, luxury travel
-11. **Karma Impact** — High-end nonprofit, foundation, social enterprise, impact-driven orgs
-12. **Apex Gaming** — Premium esports, gaming platform, tournament organizer, gaming gear
-13. **Verdant** — Sustainable / regenerative premium brands, eco-luxury, B Corp
-14. **Quill Media** — Premium podcast, newsletter, thought leadership platform, long-form media
-15. **Vesper Professional** — Law firms, consulting, accounting, professional advisory services
-16. **Cipher Web3** — Crypto, Web3, DeFi, NFT platforms, decentralized projects
-17. **Bloom Education** — Premium online courses, cohort-based learning, executive education
-18. **Velora Fashion** — Contemporary fashion, editorial fashion, lifestyle brands
-19. **Summit Corporate** — Executive leadership, corporate sites, investor relations, board-level
-20. **Nova Signature** — High-ticket personal brand, keynote speaker, author, premium coach
+**Delivery rule:** when a client picks a preset or demo, generate a site that **matches that demo’s layout and design system**, rewritten with their brief (see SKILL.md → Exact demo match).
 
-**Tip:** You can say "Preset 6", "Solace Wellness", or "Preset 6 Solace Wellness" — all work.  
+| # | Preset name | Demo site (match this) | Industry / feel |
+|---|-------------|------------------------|-----------------|
+| 1 | **Aether Luxury** | Bloom Florist | Quiet luxury, high-end brand, executive |
+| 2 | **Nexus Frontier** | BrightTech Solutions | Frontier SaaS, IT consulting, tech |
+| 3 | **Vanguard Bold** | AutoPro Garage | Bold modern services, automotive, infrastructure energy |
+| 4 | **Lumina Studio** | Pixel Studio | Creative agency, design studio |
+| 5 | **Opulento** | HomeStyle Interiors | Luxury e-commerce / interiors |
+| 6 | **Solace Wellness** | Healthy Bites | Wellness, meals, longevity, calm green |
+| 7 | **Forge Agency** | Spark Events | Events, film, experiential production |
+| 8 | **Pinnacle Wealth** | Smart Finance Advisors | Wealth, fintech, family office |
+| 9 | **Horizon Real Estate** | Dream Homes Realty | Luxury real estate |
+| 10 | **Elysium Hospitality** | Ocean View Hotel | Boutique hotel, hospitality |
+| 11 | **Karma Impact** | GreenLeaf Café | Eco café / impact brand |
+| 12 | **Apex Gaming** | FitLife Gym | High-energy fitness / gaming energy |
+| 13 | **Verdant** | FreshFarm Organics | Sustainable / organic retail |
+| 14 | **Quill Media** | WanderQuest Travel | Travel / media / editorial journeys |
+| 15 | **Vesper Professional** | LegalEase Associates | Law / professional services |
+| 16 | **Cipher Web3** | PetCare Clinic | Clinic / modern health (demo brand) |
+| 17 | **Bloom Education** | LearnSmart Academy | Courses / academy |
+| 18 | **Velora Fashion** | Bella Fashion | Fashion / editorial retail |
+| 19 | **Summit Corporate** | City Dental Care | Corporate / clinic professional |
+| 20 | **Nova Signature** | Kids World Preschool | Personal brand / family education |
+
+**Tip:** You can say `Preset 6`, `Solace Wellness`, `Healthy Bites`, or `Preset 6 Solace Wellness` — all resolve to the same demo direction.  
 **Show:** `/premium-website-master show` prints each exact preset name + live demo URL.
+
+## Header / CTA checklist (every generated site)
+
+- One desktop row: logo · nav links · primary CTA · mode toggle (+ hamburger on small screens)
+- Primary CTA label **white** on filled buttons (neon lime exception: dark ink)
+- Mode toggle always visible in `.header-actions`
+- Light mode default; dual mode ground-up

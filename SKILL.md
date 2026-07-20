@@ -7,14 +7,14 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.3"
+  version: "2.3.4"
   repository: https://github.com/shankardakolia/premium-website-master-skill
-  short-description: "20 presets · dual mode ground-up · light default"
+  short-description: "20 presets · exact demo match · dual mode"
 ---
 
-# Premium Website Master Skill v2.3.3
+# Premium Website Master Skill v2.3.4
 
-You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
+You are a high-end website designer. When the user selects a **preset** (or live demo), gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot** that **matches the chosen demo’s layout, structure, and design system** — rewritten with the client brief.
 
 Install docs (Windows / macOS / Linux): see `README.md` in this skill package.
 
@@ -115,6 +115,19 @@ Pick a preset (name or number), add a Brief, then say boom.
 - Optional: add the demo brand on a middle line (e.g. `Demo: Bloom Florist`) — preset name + URL are mandatory.
 - Do not generate HTML for a show-only request.
 
+## Exact demo match (marketing → delivery)
+
+When a client picks a **live demo** (or preset number/name), the generated site must feel like **that exact demo**, not a generic remix.
+
+1. **Resolve the source demo** from `catalogue.md` / presets (preset name ↔ demo folder ↔ live URL).
+2. **Prefer cloning the live demo HTML** when the agent can open the catalogue URL or a local `websites-collections/<Demo Name>/index.html`. Keep:
+   - Section order and types (hero, services, pricing, gallery, FAQ, contact, etc.)
+   - Header pattern, typography pairing, spacing rhythm, card styles, motion
+   - Dual-mode + color switcher behavior
+3. **Rewrite only**: business name, copy, contact details, imagery (stock OK on first gen), and accent brand colors if the brief specifies them.
+4. **Do not** invent a different layout family when the client said “like Healthy Bites / Solace Wellness / Preset 6”.
+5. If offline and the demo file is unavailable, still match the preset’s documented aesthetic and the structural rules below (header, CTAs, dual mode).
+
 ## Output rules (site generation)
 
 1. **One complete single-file HTML** site (HTML + CSS + JS inline or in one file) unless the user asks for a multi-file project.
@@ -122,30 +135,33 @@ Pick a preset (name or number), add a Brief, then say boom.
 3. **Built-in color switcher** so the client can preview alternate brand directions (palette variants).
 4. **Dark / light mode — built from the ground up (required, same priority as responsiveness):**
    - **Never bolt on mode after the fact.** Design the token system dual-mode first, then build components against tokens only.
-   - **Default mode is always light** on first visit: `<html data-mode="light">`, `:root` structural tokens start light, and JS `DEFAULT_MODE = "light"`. Use storage key `pwm-color-mode-v2` (bump key when resetting broken prefs). Only a saved user choice may open dark.
+   - **Default mode is always light** on first visit: `<html data-mode="light">`, `:root` structural tokens start light, and JS `DEFAULT_MODE = "light"`. Use storage key `pwm-color-mode-v2`. Only a saved user choice may open dark.
    - **Architecture (mandatory):**
      - `data-mode="light" | "dark"` on `<html>` owns **structure**: `--bg`, `--bg-elevated`, `--bg-soft`, `--bg-card`, `--bg-alt`, `--text`, `--text-muted`, `--text-soft`, `--border`, `--header-bg`, `--form-bg`, shadows/surfaces.
-     - Optional `data-theme` / palette switchers may **only** change **accents** (`--accent`, `--accent-2`, `--accent-hot`, softs/glows). They must **never** redefine backgrounds/text (that is why mode “does nothing” on brand-dark sites).
-     - Define both companions: `html[data-mode="light"]` / `html[data-mode="light"] body` **and** `html[data-mode="dark"]` / `html[data-mode="dark"] body` with `!important` on structural custom properties so palette/`[data-theme]` rules cannot win.
-     - Apply `background: var(--bg)` and `color: var(--text)` on `body` under both modes (with `!important` if base theme is dark-first).
-   - **Navbar control (must be visible on desktop and mobile):**
-     - Header layout: **logo | nav | header-actions** (CSS grid `auto minmax(0,1fr) auto` on `.header-inner` / header row).
-     - Put the mode toggle **inside** `.header-actions` as the last header cell (with the hamburger). Never nest it inside the nav link list.
-     - Button: `.mode-toggle` with fixed size (~2.6rem), visible border/background, sun + moon SVGs; show moon in light (click → dark), sun in dark (click → light). `id="modeToggle"`.
+     - Optional `data-theme` / palette switchers may **only** change **accents** (`--accent`, `--accent-2`, `--accent-hot`, softs/glows). They must **never** redefine backgrounds/text.
+     - Define both companions on `html` + `body` with enough specificity (use `!important` on structural custom properties when base theme is dark-first).
+     - Apply `background: var(--bg)` and `color: var(--text)` on `body` under both modes.
+   - **Navbar (desktop must match Bloom Florist pattern):**
+     - One row: **logo | nav links + primary CTA | header-actions** (mode toggle + hamburger).
+     - Use **flex** on `.header-inner` (`display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap`). Do **not** use a fragile 3-column grid that drops the mode toggle onto a second row.
+     - Put **exactly one** primary CTA in the header: either `.nav-cta` inside `nav` (preferred) **or** a single sibling before `.header-actions` — never both (duplicates break layout).
+     - At `min-width: 900px`, `.nav-cta` must be `display: inline-flex` (visible). Mobile: hamburger opens drawer; CTA may live in the drawer.
+     - Mode toggle: `.mode-toggle` ~2.6rem, visible border/background, sun/moon SVGs, `id="modeToggle"`, inside `.header-actions` only.
      - Persist with `localStorage` key `pwm-color-mode-v2`.
-   - **Brand-dark / neon / cinematic aesthetics:** still **default light**. Ship readable light surfaces + a real dark companion. For **photo heroes** (dark image backdrop), keep hero type light-on-dark in **both** modes (white headlines, light copy, glass form panels with light labels). Do not let page light-mode paint dark ink onto dark photos. Neon accents used as **text** in light mode must darken for contrast (e.g. lime → olive); primary neon CTAs may stay bright.
-   - Restyle surfaces, text, borders, cards, forms, header, filters, tags — **never** `filter: invert()` on the page.
-   - No hardcoded page-surface colors that ignore tokens; major surfaces use CSS variables so mode works everywhere.
-   - CTA contrast in both modes.
-   - Toggle must visibly change body/header/cards (if light and dark look the same, the implementation failed).
+   - **Primary CTA contrast (critical):**
+     - Nav link color rules must **exclude** `.btn` / `.btn-primary` / `.nav-cta` (otherwise labels go grey).
+     - Filled primary buttons: `color: #fff !important; -webkit-text-fill-color: #fff !important` in both modes (exception: neon/lime fills keep dark ink, e.g. FitLife).
+   - **Cards / body copy in dark mode:** never hardcode light-only greys (`#334155`, `#475569`) on card descriptions/tags. Use `var(--text)` / `var(--text-muted)` or dual-mode rules so catalogue/cards stay readable.
+   - **Brand-dark / photo heroes:** default page mode is still light. Photo/cinematic heroes keep light-on-dark type in both modes. Neon used as text must darken in light mode.
+   - Never `filter: invert()` the page. Toggle must visibly change body/header/cards.
 5. **Images strategy (first generation):**
-   - **On first boom / first generation:** use **temporary stock images** (e.g. Unsplash or similar HTTPS URLs) that match the industry/mood — hero, cards, gallery, team, product tiles. Prefer real photo URLs over pure CSS gradients for media areas.
+   - **On first boom / first generation:** use **temporary stock images** (e.g. Unsplash HTTPS URLs) that match the industry/mood — hero, cards, gallery, team, product tiles. Prefer real photo URLs over pure CSS gradients for media areas.
    - Do **not** ship empty gray boxes or gradient-only product/course/gallery tiles when the section is meant to show photography.
    - Later, when the user provides brand assets, swap temporary URLs for final images without redesigning layout.
    - Always set meaningful `alt` text; use `loading="lazy"` below the fold.
 6. **No content placeholders** — real copy from the brief, no lorem ipsum, no TODOs, no incomplete sections (copy is final-quality; images may be temporary stock).
 7. **Awwwards-level quality** — distinctive typography, refined spacing, one signature visual moment, polished micro-interactions.
-8. Honor the selected preset’s aesthetic (quiet luxury, frontier SaaS, wellness, etc.).
+8. Honor the selected preset’s aesthetic **and the exact linked demo** (quiet luxury, frontier SaaS, wellness, etc.).
 9. Semantic HTML, accessible contrast, focus states, and `prefers-reduced-motion` support.
 10. **Scroll-triggered reveal animations (required, must be clearly visible):**
    - Below-the-fold content animates in on scroll via `IntersectionObserver` **plus** a `requestAnimationFrame` scroll fallback (IO alone often fails after first paint on mobile/continuous scroll).
@@ -206,8 +222,8 @@ See also `presets.md` and `catalogue.md`.
 ## Workflow
 
 1. **Route first:** if the message is `show` / catalogue / demos → print the live catalogue and stop.
-2. Parse preset (number and/or name). If missing or invalid, list presets (or run show) and ask once.
+2. Parse preset (number and/or name **or demo brand**, e.g. “Healthy Bites”). Map to the catalogue row. If missing or invalid, list presets (or run show) and ask once.
 3. Parse brief. If missing, ask for industry, audience, and one-word feel (max 3 questions).
-4. On **boom** (or clear go-ahead): generate the full site immediately — no partial drafts.
+4. On **boom** (or clear go-ahead): load/open the source demo when possible, then generate the full site as an **exact-demo match** with the brief — no partial drafts.
 5. Save under a clear path when working in a project (e.g. `generated-websites/preset-06-solace-wellness/index.html`).
-6. Report: preset used, key design choices, live demo link for that preset (from the catalogue), and how to open/preview the site.
+6. Report: preset + demo used, confirmation that layout matches the demo, live demo link, and how to open/preview the new site.
