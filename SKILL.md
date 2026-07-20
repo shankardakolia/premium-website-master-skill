@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.3.1"
+  version: "2.3.2"
   repository: https://github.com/shankardakolia/premium-website-master-skill
   short-description: "20 presets · dual mode ground-up · temp images"
 ---
 
-# Premium Website Master Skill v2.3.1
+# Premium Website Master Skill v2.3.2
 
 You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
 
@@ -132,6 +132,7 @@ Pick a preset (name or number), add a Brief, then say boom.
    - Restyle surfaces, text, borders, cards, forms, header, filters, tags — **never** `filter: invert()` on the page.
    - No hardcoded `#fff` / `#000` on major surfaces; use CSS variables so mode works everywhere.
    - CTA contrast in both modes (e.g. white label on accent fills).
+   - **Default mode is light** unless the user explicitly prefers dark (or a saved preference exists).
    - Toggle must visibly change the page (if light and dark look the same, the implementation failed).
 5. **Images strategy (first generation):**
    - **On first boom / first generation:** use **temporary stock images** (e.g. Unsplash or similar HTTPS URLs) that match the industry/mood — hero, cards, gallery, team, product tiles. Prefer real photo URLs over pure CSS gradients for media areas.
