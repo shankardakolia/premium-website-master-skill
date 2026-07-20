@@ -1,12 +1,13 @@
-# Premium Website Master Skill v2.1
+# Premium Website Master Skill v2.2.1
 
-**One-shot premium website generator** with **20 named design presets**.
+**One-shot premium website generator** with **20 named design presets** and a **live demo catalogue**.
 
 Turn any coding agent into a high-end website designer: pick a preset → give a brief → say **boom** → get a complete, client-ready single-file HTML site.
 
 | Feature | Included |
 |--------|----------|
 | 20 unique design presets | Yes |
+| Live demo catalogue (`show`) | Yes |
 | Single-file HTML (CSS + JS inline) | Yes |
 | Fully responsive (375px–1440px+) | Yes |
 | Built-in color switcher | Yes |
@@ -21,7 +22,15 @@ Turn any coding agent into a high-end website designer: pick a preset → give a
 ## Quick start
 
 1. Install this skill (see [Installation](#installation) below).
-2. In your agent chat:
+2. **Browse live demos** (optional):
+
+```text
+/premium-website-master show
+```
+
+Prints all 20 exact preset names with hosted demo links (e.g. `https://noventra-portfolio.vercel.app/Bloom%20Florist/index.html`).
+
+3. In your agent chat, generate a site:
 
 ```text
 Preset 6 Solace Wellness
@@ -29,13 +38,14 @@ Brief: Premium longevity clinic in Dubai for high-net-worth clients. Calm organi
 boom
 ```
 
-3. The agent generates one complete `index.html` (or a path you specify).
+4. The agent generates one complete `index.html` (or a path you specify).
 
 Also accepted:
 
 - `Preset 6`
 - `Solace Wellness`
 - `Preset 6 Solace Wellness`
+- `show` / `catalogue` / `demos`
 
 ---
 
@@ -48,12 +58,17 @@ Works on **Windows**, **macOS**, and **Linux**. Choose the method that matches y
 **macOS / Linux (Terminal):**
 
 ```bash
-# User-level skills folder (Claude Code / many agents)
+# Grok CLI (global — available in every folder/session)
+mkdir -p ~/.grok/skills
+git clone https://github.com/shankardakolia/premium-website-master-skill.git \
+  ~/.grok/skills/premium-website-master
+
+# Claude Code / many agents
 mkdir -p ~/.claude/skills
 git clone https://github.com/shankardakolia/premium-website-master-skill.git \
   ~/.claude/skills/premium-website-master
 
-# Or Agents / Cursor-style location
+# Agents / Cursor-style location (also discovered by Grok)
 mkdir -p ~/.agents/skills
 git clone https://github.com/shankardakolia/premium-website-master-skill.git \
   ~/.agents/skills/premium-website-master
@@ -62,12 +77,17 @@ git clone https://github.com/shankardakolia/premium-website-master-skill.git \
 **Windows (PowerShell):**
 
 ```powershell
+# Grok CLI (global)
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.grok\skills" | Out-Null
+git clone https://github.com/shankardakolia/premium-website-master-skill.git `
+  "$env:USERPROFILE\.grok\skills\premium-website-master"
+
 # Claude Code skills
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills" | Out-Null
 git clone https://github.com/shankardakolia/premium-website-master-skill.git `
   "$env:USERPROFILE\.claude\skills\premium-website-master"
 
-# Or agents skills folder
+# Agents skills folder
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
 git clone https://github.com/shankardakolia/premium-website-master-skill.git `
   "$env:USERPROFILE\.agents\skills\premium-website-master"
@@ -82,9 +102,10 @@ git clone https://github.com/shankardakolia/premium-website-master-skill.git `
 3. Unzip the folder
 4. Rename the folder to `premium-website-master` (optional but tidy)
 5. Move it into one of:
+   - **Grok CLI (global):** `~/.grok/skills/` (Windows: `%USERPROFILE%\.grok\skills\`) — **required for the skill to appear in every Grok session**
    - **Claude Code:** `~/.claude/skills/` (Windows: `%USERPROFILE%\.claude\skills\`)
-   - **Grok / Agents:** `~/.agents/skills/` (Windows: `%USERPROFILE%\.agents\skills\`)
-   - **Project-local:** `your-project/.claude/skills/` or `your-project/skills/`
+   - **Agents:** `~/.agents/skills/` (Windows: `%USERPROFILE%\.agents\skills\`)
+   - **Project-local:** `your-project/.grok/skills/` or `your-project/.agents/skills/`
 
 ### Option C — npx skills (if you use the skills CLI)
 
@@ -137,17 +158,38 @@ boom
 
 ### 3. Grok (xAI) / Grok Build
 
-1. Clone into `~/.agents/skills/premium-website-master` (macOS/Linux) or `%USERPROFILE%\.agents\skills\premium-website-master` (Windows).
-2. Start a new session so skills are discovered.
-3. Ask: `use /premium-website-master` or “use the premium website master skill”.
+**Global install (recommended — works in every folder):**
+
+1. Clone into **`~/.grok/skills/premium-website-master`** (macOS/Linux) or `%USERPROFILE%\.grok\skills\premium-website-master` (Windows).
+   - Optional mirror: also install to `~/.agents/skills/premium-website-master`.
+2. Open a **new** Grok session in any project folder (skills reload from disk; existing sessions may not pick up a new install).
+3. Confirm: `grok inspect` should list `premium-website-master` as `user`.
+4. Run:
+
+```text
+/premium-website-master show
+```
+
+or
+
+```text
+/premium-website-master
+Preset 6 Solace Wellness
+Brief: …
+boom
+```
+
+If the slash menu is crowded (many skills), type `/premium` to filter.
+
+**Why it only appeared in the skill repo before:** installing only under a project path (or only updating the git repo) does not register a user skill. Grok’s global skill directory is `~/.grok/skills/`.
 
 ### 4. Claude.ai Projects
 
 1. Create a Project.
-2. Upload `SKILL.md` (and optionally `presets.md`).
+2. Upload `SKILL.md` (and optionally `presets.md`, `catalogue.md`).
 3. Project instructions:
 
-> You are the Premium Website Master Skill v2.1. Follow SKILL.md exactly. When the user selects a preset, gives a brief, and says boom, generate a complete one-shot premium website.
+> You are the Premium Website Master Skill v2.2. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset, gives a brief, and says boom, generate a complete one-shot premium website.
 
 ### 5. Windsurf / Cascade
 
@@ -179,7 +221,7 @@ Then send: `Preset 4 Lumina Studio` + brief + `boom`.
 At the start of the chat:
 
 ```text
-You are now the Premium Website Master Skill v2.1.
+You are now the Premium Website Master Skill v2.2.
 Follow these rules exactly:
 [paste full SKILL.md]
 ```
@@ -196,7 +238,16 @@ boom
 
 ## Usage
 
-### Format
+### Show live catalogue
+
+```text
+/premium-website-master show
+```
+
+Output: every exact preset name + live demo URL from the hosted portfolio  
+(hub: https://noventra-portfolio.vercel.app). Full map: [`catalogue.md`](./catalogue.md).
+
+### Format (generate)
 
 ```text
 Preset <number> <optional name>
@@ -271,6 +322,7 @@ premium-website-master-skill/
 ├── README.md      ← You are here (install + docs)
 ├── SKILL.md       ← Agent instructions (required)
 ├── presets.md     ← Preset cheat sheet
+├── catalogue.md   ← Live demo URLs for /show
 └── LICENSE        ← MIT
 ```
 
@@ -281,15 +333,23 @@ premium-website-master-skill/
 **Git install:**
 
 ```bash
-cd ~/.claude/skills/premium-website-master   # or your install path
+cd ~/.grok/skills/premium-website-master   # or ~/.claude/... / ~/.agents/...
 git pull
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-cd $env:USERPROFILE\.claude\skills\premium-website-master
+cd $env:USERPROFILE\.grok\skills\premium-website-master
 git pull
+```
+
+If you keep a copy of the skill repo elsewhere, re-sync into the install path after edits:
+
+```bash
+cp SKILL.md presets.md catalogue.md README.md LICENSE ~/.grok/skills/premium-website-master/
+# optional mirror
+cp SKILL.md presets.md catalogue.md README.md LICENSE ~/.agents/skills/premium-website-master/
 ```
 
 ---
@@ -298,11 +358,13 @@ git pull
 
 | Issue | Fix |
 |-------|-----|
-| Agent ignores the skill | Attach or `@` `SKILL.md` explicitly; restart the agent |
+| Skill only works in the skill repo folder | Install to **`~/.grok/skills/premium-website-master`**, then open a **new** session elsewhere |
+| Skill not listed in other folders | Run `grok inspect` — should show `premium-website-master` as `user`. If missing, reinstall under `~/.grok/skills/` |
+| Slash command hard to find | Type `/premium` to filter; or open `/skills` |
+| Agent ignores the skill | Invoke `/premium-website-master` explicitly; restart the agent |
 | No scroll animations in output | Remind: “follow SKILL.md rule 8 — scroll reveals required” |
 | Wrong aesthetic | Use preset **number + name** and a clear brief |
-| Skill not listed | Confirm folder contains `SKILL.md` and sits under a skills directory your agent scans |
-| Windows path issues | Prefer `%USERPROFILE%\.claude\skills\...` and Git for Windows |
+| Windows path issues | Prefer `%USERPROFILE%\.grok\skills\...` and Git for Windows |
 
 ---
 

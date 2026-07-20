@@ -1,6 +1,7 @@
 # 20 Premium Website Presets (Self-Explaining)
 
-Use these exact names or numbers when selecting a preset.
+Use these exact names or numbers when selecting a preset.  
+For live demo links, run `/premium-website-master show` or open [`catalogue.md`](./catalogue.md).
 
 1. **Aether Luxury** — Quiet luxury private wealth, high-end brand advisory, executive coaching
 2. **Nexus Frontier** — Agentic AI / frontier SaaS platform, developer tools, autonomous agents
@@ -23,4 +24,5 @@ Use these exact names or numbers when selecting a preset.
 19. **Summit Corporate** — Executive leadership, corporate sites, investor relations, board-level
 20. **Nova Signature** — High-ticket personal brand, keynote speaker, author, premium coach
 
-**Tip:** You can say "Preset 6", "Solace Wellness", or "Preset 6 Solace Wellness" — all work.
+**Tip:** You can say "Preset 6", "Solace Wellness", or "Preset 6 Solace Wellness" — all work.  
+**Show:** `/premium-website-master show` prints each exact preset name + live demo URL.

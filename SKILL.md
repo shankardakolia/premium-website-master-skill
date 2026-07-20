@@ -1,27 +1,36 @@
 ---
 name: premium-website-master
 description: >
-  One-shot premium website generator with 20 named design presets.
-  Use when the user picks a preset (name or number), gives a brief, and says "boom"
-  — or asks for a client-ready premium landing page from a named preset
-  (Aether Luxury, Nexus Frontier, Solace Wellness, etc.).
-  Outputs a complete, responsive single-file HTML site with built-in color switcher,
-  scroll-triggered reveal animations, and prefers-reduced-motion support.
-argument-hint: "Preset N [Name] | Brief: ... | boom"
+  One-shot premium website generator (20 presets + live demo catalogue).
+  Use for /premium-website-master, /premium-website-master show, or preset + brief + boom.
+argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.1.0"
+  version: "2.2.1"
   repository: https://github.com/shankardakolia/premium-website-master-skill
+  short-description: "20 presets · show catalogue · one-shot sites"
 ---
 
-# Premium Website Master Skill v2.1
+# Premium Website Master Skill v2.2.1
 
 You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
 
 Install docs (Windows / macOS / Linux): see `README.md` in this skill package.
 
 ## Invocation format
+
+### Show live catalogue (no site generation)
+
+```
+/premium-website-master show
+```
+
+Also accept: `show`, `catalogue`, `catalog`, `demos`, `list demos`, or `list presets`.
+
+**On show:** Immediately print the full live catalogue from `catalogue.md` (exact preset names + exact demo URLs). Do **not** generate a website. Do **not** ask for a brief.
+
+### Generate a site
 
 ```
 Preset 6 Solace Wellness
@@ -31,7 +40,82 @@ boom
 
 Also accept: `Preset 6`, `Solace Wellness`, or `Preset 6 Solace Wellness`.
 
-## Output rules
+## Command routing (run first)
+
+Parse the invocation argument / first user message:
+
+| Input | Action |
+|-------|--------|
+| `show`, `catalogue`, `catalog`, `demos`, `list demos`, `list presets` | Print live catalogue only (see below). Stop. |
+| Preset number and/or name + brief + boom | Generate full site. |
+| Preset only / brief missing | List presets (or show catalogue) and ask once for missing brief. |
+| Invalid / empty with no clear intent | Print short help: how to `show`, how to pick a preset, and how to boom. |
+
+## Show command — required output
+
+When the user runs **show** (or aliases above):
+
+1. Load `catalogue.md` from this skill package if available; otherwise use the embedded list below.
+2. Print **on screen** every preset with:
+   - **Exact preset name** (spelling and capitalization must match)
+   - **Live demo URL** (exact path; keep URL encoding)
+3. Use this format:
+
+```text
+Premium Website Master — Live catalogue
+Hub: https://noventra-portfolio.vercel.app
+
+ 1. Aether Luxury
+    https://noventra-portfolio.vercel.app/Bloom%20Florist/index.html
+ 2. Nexus Frontier
+    https://noventra-portfolio.vercel.app/BrightTech%20Solutions/index.html
+ 3. Vanguard Bold
+    https://noventra-portfolio.vercel.app/AutoPro%20Garage/index.html
+ 4. Lumina Studio
+    https://noventra-portfolio.vercel.app/Pixel%20Studio/index.html
+ 5. Opulento
+    https://noventra-portfolio.vercel.app/HomeStyle%20Interiors/index.html
+ 6. Solace Wellness
+    https://noventra-portfolio.vercel.app/Healthy%20Bites/index.html
+ 7. Forge Agency
+    https://noventra-portfolio.vercel.app/Spark%20Events/index.html
+ 8. Pinnacle Wealth
+    https://noventra-portfolio.vercel.app/Smart%20Finance%20Advisors/index.html
+ 9. Horizon Real Estate
+    https://noventra-portfolio.vercel.app/Dream%20Homes%20Realty/index.html
+10. Elysium Hospitality
+    https://noventra-portfolio.vercel.app/Ocean%20View%20Hotel/index.html
+11. Karma Impact
+    https://noventra-portfolio.vercel.app/GreenLeaf%20Caf%C3%A9/index.html
+12. Apex Gaming
+    https://noventra-portfolio.vercel.app/FitLife%20Gym/index.html
+13. Verdant
+    https://noventra-portfolio.vercel.app/FreshFarm%20Organics/index.html
+14. Quill Media
+    https://noventra-portfolio.vercel.app/WanderQuest%20Travel/index.html
+15. Vesper Professional
+    https://noventra-portfolio.vercel.app/LegalEase%20Associates/index.html
+16. Cipher Web3
+    https://noventra-portfolio.vercel.app/PetCare%20Clinic/index.html
+17. Bloom Education
+    https://noventra-portfolio.vercel.app/LearnSmart%20Academy/index.html
+18. Velora Fashion
+    https://noventra-portfolio.vercel.app/Bella%20Fashion/index.html
+19. Summit Corporate
+    https://noventra-portfolio.vercel.app/City%20Dental%20Care/index.html
+20. Nova Signature
+    https://noventra-portfolio.vercel.app/Kids%20World%20Preschool/index.html
+
+Pick a preset (name or number), add a Brief, then say boom.
+```
+
+**Hard rules for show:**
+- Never invent, shorten, or “clean up” URLs (keep `%20`, `Caf%C3%A9`, etc.).
+- Never rename presets.
+- Optional: add the demo brand on a middle line (e.g. `Demo: Bloom Florist`) — preset name + URL are mandatory.
+- Do not generate HTML for a show-only request.
+
+## Output rules (site generation)
 
 1. **One complete single-file HTML** site (HTML + CSS + JS inline or in one file) unless the user asks for a multi-file project.
 2. **Fully responsive** — works at 375px through 1440px+.
@@ -52,33 +136,54 @@ Also accept: `Preset 6`, `Solace Wellness`, or `Preset 6 Solace Wellness`.
 
 ## 20 Premium Website Presets
 
-1. **Aether Luxury** — Quiet luxury private wealth / high-end brand advisory
-2. **Nexus Frontier** — Agentic AI / frontier SaaS platform
-3. **Vanguard Bold** — Confident modern tech / infrastructure
-4. **Lumina Studio** — Creative agency / design studio
-5. **Opulento** — Premium luxury e-commerce shop
-6. **Solace Wellness** — Premium wellness, longevity, spa, biohacking
-7. **Forge Agency** — Creative production / film / experiential agency
-8. **Pinnacle Wealth** — Private wealth / fintech / family office
-9. **Horizon Real Estate** — Luxury real estate / property development
-10. **Elysium Hospitality** — Boutique hotel / fine dining / private club
-11. **Karma Impact** — High-end nonprofit / foundation / impact org
-12. **Apex Gaming** — Premium esports / gaming platform
-13. **Verdant** — Sustainable / regenerative premium brand
-14. **Quill Media** — Premium podcast / newsletter / thought leadership
-15. **Vesper Professional** — Law firm / consulting / professional services
-16. **Cipher Web3** — Crypto / Web3 / DeFi project
-17. **Bloom Education** — Premium online courses / cohort learning
-18. **Velora Fashion** — Contemporary / editorial fashion brand
-19. **Summit Corporate** — Executive / corporate leadership site
-20. **Nova Signature** — High-ticket personal brand / speaker / coach
+1. **Aether Luxury** — Quiet luxury private wealth / high-end brand advisory  
+   Live: https://noventra-portfolio.vercel.app/Bloom%20Florist/index.html
+2. **Nexus Frontier** — Agentic AI / frontier SaaS platform  
+   Live: https://noventra-portfolio.vercel.app/BrightTech%20Solutions/index.html
+3. **Vanguard Bold** — Confident modern tech / infrastructure  
+   Live: https://noventra-portfolio.vercel.app/AutoPro%20Garage/index.html
+4. **Lumina Studio** — Creative agency / design studio  
+   Live: https://noventra-portfolio.vercel.app/Pixel%20Studio/index.html
+5. **Opulento** — Premium luxury e-commerce shop  
+   Live: https://noventra-portfolio.vercel.app/HomeStyle%20Interiors/index.html
+6. **Solace Wellness** — Premium wellness, longevity, spa, biohacking  
+   Live: https://noventra-portfolio.vercel.app/Healthy%20Bites/index.html
+7. **Forge Agency** — Creative production / film / experiential agency  
+   Live: https://noventra-portfolio.vercel.app/Spark%20Events/index.html
+8. **Pinnacle Wealth** — Private wealth / fintech / family office  
+   Live: https://noventra-portfolio.vercel.app/Smart%20Finance%20Advisors/index.html
+9. **Horizon Real Estate** — Luxury real estate / property development  
+   Live: https://noventra-portfolio.vercel.app/Dream%20Homes%20Realty/index.html
+10. **Elysium Hospitality** — Boutique hotel / fine dining / private club  
+    Live: https://noventra-portfolio.vercel.app/Ocean%20View%20Hotel/index.html
+11. **Karma Impact** — High-end nonprofit / foundation / impact org  
+    Live: https://noventra-portfolio.vercel.app/GreenLeaf%20Caf%C3%A9/index.html
+12. **Apex Gaming** — Premium esports / gaming platform  
+    Live: https://noventra-portfolio.vercel.app/FitLife%20Gym/index.html
+13. **Verdant** — Sustainable / regenerative premium brand  
+    Live: https://noventra-portfolio.vercel.app/FreshFarm%20Organics/index.html
+14. **Quill Media** — Premium podcast / newsletter / thought leadership  
+    Live: https://noventra-portfolio.vercel.app/WanderQuest%20Travel/index.html
+15. **Vesper Professional** — Law firm / consulting / professional services  
+    Live: https://noventra-portfolio.vercel.app/LegalEase%20Associates/index.html
+16. **Cipher Web3** — Crypto / Web3 / DeFi project  
+    Live: https://noventra-portfolio.vercel.app/PetCare%20Clinic/index.html
+17. **Bloom Education** — Premium online courses / cohort learning  
+    Live: https://noventra-portfolio.vercel.app/LearnSmart%20Academy/index.html
+18. **Velora Fashion** — Contemporary / editorial fashion brand  
+    Live: https://noventra-portfolio.vercel.app/Bella%20Fashion/index.html
+19. **Summit Corporate** — Executive / corporate leadership site  
+    Live: https://noventra-portfolio.vercel.app/City%20Dental%20Care/index.html
+20. **Nova Signature** — High-ticket personal brand / speaker / coach  
+    Live: https://noventra-portfolio.vercel.app/Kids%20World%20Preschool/index.html
 
-See also `presets.md` for the same list in short form.
+See also `presets.md` and `catalogue.md`.
 
 ## Workflow
 
-1. Parse preset (number and/or name). If missing or invalid, list presets and ask once.
-2. Parse brief. If missing, ask for industry, audience, and one-word feel (max 3 questions).
-3. On **boom** (or clear go-ahead): generate the full site immediately — no partial drafts.
-4. Save under a clear path when working in a project (e.g. `generated-websites/preset-06-solace-wellness/index.html`).
-5. Report: preset used, key design choices, and how to open/preview the site.
+1. **Route first:** if the message is `show` / catalogue / demos → print the live catalogue and stop.
+2. Parse preset (number and/or name). If missing or invalid, list presets (or run show) and ask once.
+3. Parse brief. If missing, ask for industry, audience, and one-word feel (max 3 questions).
+4. On **boom** (or clear go-ahead): generate the full site immediately — no partial drafts.
+5. Save under a clear path when working in a project (e.g. `generated-websites/preset-06-solace-wellness/index.html`).
+6. Report: preset used, key design choices, live demo link for that preset (from the catalogue), and how to open/preview the site.
