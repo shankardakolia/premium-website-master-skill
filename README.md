@@ -1,4 +1,4 @@
-# Premium Website Master Skill v2.2.2
+# Premium Website Master Skill v2.3.0
 
 **One-shot premium website generator** with **20 named design presets** and a **live demo catalogue**.
 
@@ -11,6 +11,8 @@ Turn any coding agent into a high-end website designer: pick a preset → give a
 | Single-file HTML (CSS + JS inline) | Yes |
 | Fully responsive (375px–1440px+) | Yes |
 | Built-in color switcher | Yes |
+| Dark / light mode toggle (navbar) | Yes |
+| Temporary stock images on first gen | Yes (swap later) |
 | Scroll-triggered reveal animations | Yes (required) |
 | Real copy from your brief | Yes |
 | Cross-platform install (Windows / macOS / Linux) | Yes |
@@ -189,7 +191,7 @@ If the slash menu is crowded (many skills), type `/premium` to filter.
 2. Upload `SKILL.md` (and optionally `presets.md`, `catalogue.md`).
 3. Project instructions:
 
-> You are the Premium Website Master Skill v2.2. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset, gives a brief, and says boom, generate a complete one-shot premium website.
+> You are the Premium Website Master Skill v2.3.0. Follow SKILL.md exactly. On `show`, print the live catalogue. When the user selects a preset, gives a brief, and says boom, generate a complete one-shot premium website.
 
 ### 5. Windsurf / Cascade
 
@@ -221,7 +223,7 @@ Then send: `Preset 4 Lumina Studio` + brief + `boom`.
 At the start of the chat:
 
 ```text
-You are now the Premium Website Master Skill v2.2.
+You are now the Premium Website Master Skill v2.3.0.
 Follow these rules exactly:
 [paste full SKILL.md]
 ```
@@ -274,6 +276,8 @@ boom
 - One complete **single-file HTML** site (unless you ask for multi-file)
 - Responsive layout
 - Color switcher (3–4 palettes)
+- **Dark / light mode** toggle in the navbar (persisted)
+- Temporary stock photography on first generation (replace with brand assets later)
 - Clear **scroll reveal** animations (fade + rise, staggered cards)
 - Real sections from your brief (no lorem ipsum)
 - Accessible focus states + `prefers-reduced-motion` support

@@ -7,12 +7,12 @@ argument-hint: "show | Preset N [Name] | Brief: ... | boom"
 license: MIT
 metadata:
   author: shankardakolia
-  version: "2.2.2"
+  version: "2.3.0"
   repository: https://github.com/shankardakolia/premium-website-master-skill
-  short-description: "20 presets · show catalogue · one-shot sites"
+  short-description: "20 presets · show · dark/light · temp images"
 ---
 
-# Premium Website Master Skill v2.2.2
+# Premium Website Master Skill v2.3.0
 
 You are a high-end website designer. When the user selects a **preset**, gives a **brief**, and says **boom**, generate a complete, client-ready premium website in **one shot**.
 
@@ -119,12 +119,24 @@ Pick a preset (name or number), add a Brief, then say boom.
 
 1. **One complete single-file HTML** site (HTML + CSS + JS inline or in one file) unless the user asks for a multi-file project.
 2. **Fully responsive** — works at 375px through 1440px+.
-3. **Built-in color switcher** so the client can preview alternate brand directions.
-4. **No placeholders** — real copy from the brief, no lorem ipsum, no TODOs, no incomplete sections.
-5. **Awwwards-level quality** — distinctive typography, refined spacing, one signature visual moment, polished micro-interactions.
-6. Honor the selected preset’s aesthetic (quiet luxury, frontier SaaS, wellness, etc.).
-7. Semantic HTML, accessible contrast, focus states, and `prefers-reduced-motion` support.
-8. **Scroll-triggered reveal animations (required, must be clearly visible):**
+3. **Built-in color switcher** so the client can preview alternate brand directions (palette variants).
+4. **Dark / light mode toggle in the navbar (required):**
+   - Place a clear sun/moon (or equivalent) control in the **header/navbar** (visible on mobile and desktop).
+   - Persist choice in `localStorage` (e.g. key `pwm-color-mode`).
+   - Toggle `data-mode="light"` / `data-mode="dark"` on `<html>`.
+   - Dark mode must restyle surfaces, text, borders, cards, forms, and header — **do not** invert the whole page with CSS `filter` (that ruins photos).
+   - Respect readable contrast in both modes; keep primary CTAs legible (e.g. white text on accent buttons).
+   - Optional: default from `prefers-color-scheme` when no saved preference.
+5. **Images strategy (first generation):**
+   - **On first boom / first generation:** use **temporary stock images** (e.g. Unsplash or similar HTTPS URLs) that match the industry/mood — hero, cards, gallery, team, product tiles. Prefer real photo URLs over pure CSS gradients for media areas.
+   - Do **not** ship empty gray boxes or gradient-only product/course/gallery tiles when the section is meant to show photography.
+   - Later, when the user provides brand assets, swap temporary URLs for final images without redesigning layout.
+   - Always set meaningful `alt` text; use `loading="lazy"` below the fold.
+6. **No content placeholders** — real copy from the brief, no lorem ipsum, no TODOs, no incomplete sections (copy is final-quality; images may be temporary stock).
+7. **Awwwards-level quality** — distinctive typography, refined spacing, one signature visual moment, polished micro-interactions.
+8. Honor the selected preset’s aesthetic (quiet luxury, frontier SaaS, wellness, etc.).
+9. Semantic HTML, accessible contrast, focus states, and `prefers-reduced-motion` support.
+10. **Scroll-triggered reveal animations (required, must be clearly visible):**
    - Below-the-fold content animates in on scroll via `IntersectionObserver` **plus** a `requestAnimationFrame` scroll fallback (IO alone often fails after first paint on mobile/continuous scroll).
    - Default motion: fade + rise (`opacity: 0` → `1`, `translateY(40px–56px)` → `0`) over ~0.7–1.0s with a smooth ease (e.g. `cubic-bezier(0.16, 1, 0.3, 1)`). Optional variants: left, right, scale.
    - Animate **discrete content units only** (cards, articles, section heads, stats, steps, forms) — **never** put `opacity: 0` / reveal classes on tall shells (`.container`, full `section`, whole grids). Tall shells stick invisible because IO thresholds never fire.
